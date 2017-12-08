@@ -8,7 +8,12 @@
 #include <DirectXColors.h>
 
 #include "MyLibrary.h"
-#include "ParticleEffectManager.h"
+#include "FlameEmitter.h"
+#include "ExplosionEmitter.h"
+#include "OriginalEmitter.h"
+#include "OriginalEmitter2.h"
+
+
 
 class Game : public MyLibrary::Framework
 {
@@ -25,10 +30,10 @@ private:
     void Update(MyLibrary::StepTimer const& timer);
     void Render();
 
-	// デバッグカメラ
+	// Debug camera
 	std::unique_ptr<MyLibrary::DebugCamera> m_Camera;
-	// 天球
+	// Skydome
 	std::unique_ptr<MyLibrary::Obj3D> m_ObjSkydome;
-	// パーティクルエフェクトマネージャ
-	std::unique_ptr<ParticleEffectManager> m_ParticleEffectManager;
+	// Fire emitter
+	std::unique_ptr<OriginalEmitter2> m_FlameEmitter;
 };

@@ -15,11 +15,21 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="ParticleEffectManager.h" />
+    <ClInclude Include="Emitter.h" />
+    <ClInclude Include="FlameEmitter.h" />
+    <ClInclude Include="ExplosionEmitter.h" />
+    <ClInclude Include="OriginalEmitter.h" />
+    <ClInclude Include="OriginalEmitter2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ParticleEffectManager.cpp" />
+    <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="FlameEmitter.cpp" />
+    <ClCompile Include="ExplosionEmitter.cpp" />
+    <ClCompile Include="OriginalEmitter.cpp" />
+    <ClCompile Include="OriginalEmitter2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

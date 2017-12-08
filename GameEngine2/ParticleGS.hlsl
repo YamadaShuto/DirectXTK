@@ -8,9 +8,9 @@ static const uint vnum = 4;
 static const float4 offset_array[vnum] =
 {
 	float4(-0.5f, -0.5f, 0, 0),	// 左下
-	float4(+0.5f, -0.5f, 0, 0),	// 右下
-	float4(-0.5f, +0.5f, 0, 0),	// 左上
-	float4(+0.5f, +0.5f, 0, 0)	// 右上
+	float4( 0.5f, -0.5f, 0, 0),	// 右下
+	float4(-0.5f,  0.5f, 0, 0),	// 左上
+	float4( 0.5f,  0.5f, 0, 0)	// 右上
 };
 
 // テクスチャＵＶ(左上が0,0 右下1,1)
@@ -24,67 +24,31 @@ static const float2 uv_array[vnum] =
 
 [maxvertexcount(vnum)]
 void main(
-	point GSInput input[1],
-	inout TriangleStream< PSInput > output
+	point VSOutput input[1],
+	inout TriangleStream< GSOutput > output
 )
 {
-	//for (uint j = 0; j < 100; j++)
 	{
-		PSInput element;
+        GSOutput element = (GSOutput)0;
 
 		float4 offset;
-		// 回転角
-		float rot = input[0].other.y;
 
-		//for (uint i = 0; i < 3; i++)
-		//{			
-		//	element.pos = input[i].pos + float4(j, 0, 0, 0);
-		//	element.pos = mul(element.pos, g_WVP);
-		//	//element.pos += float4(1.0f * j, 0, 0, 0);
-		//	element.color = input[i].color;
-		//	element.uv = input[i].uv;
-		//	output.Append(element);
-		//}
-
-		// 4点分
+		// 1点の座標から4点分作成
 		for (uint i = 0; i < vnum; i++)
 		{
-			// 指定角度分回転
-			offset.x = offset_array[i].x *  cos(rot) + offset_array[i].y * sin(rot);
-			offset.y = offset_array[i].x * -sin(rot) + offset_array[i].y * cos(rot);
-			offset.z = 0;
-			offset.w = 0;
-			// ビルボード行列による回転
-			offset = mul(offset, g_Billboard);
-			element.pos = input[0].pos + offset * input[0].other.x;
-			// 座標変換（ワールド座標→２Ｄ座標）
-			element.pos = mul(element.pos, g_WVP);
+            offset = offset_array[i];
+            offset.x = offset_array[i].x * cos(input[0].other.x) + offset_array[i].y * +sin(input[0].other.x);
+            offset.y = offset_array[i].x * -sin(input[0].other.x) + offset_array[i].y * +cos(input[0].other.x);
+			// センターからのずらし分をビルボード化
+			offset = mul(offset * input[0].other.y, g_Billboard);
+			// ビュープロジェクション変換
+			element.pos = mul(input[0].pos + offset, g_VP);
 			element.color = input[0].color;
 			element.uv = uv_array[i];
 			output.Append(element);
 		}
 
-		//// 2点目
-		//element.pos = input[0].pos + float4(+0.5f, -0.5f, 0, 0);
-		//element.pos = mul(element.pos, g_WVP);
-		//element.color = input[0].color;
-		//element.uv = input[0].uv;
-		//output.Append(element);
-
-		//// 3点目
-		//element.pos = input[0].pos + float4(-0.5f, +0.5f, 0, 0);
-		//element.pos = mul(element.pos, g_WVP);
-		//element.color = input[0].color;
-		//element.uv = input[0].uv;
-		//output.Append(element);
-
-		//// 4点目
-		//element.pos = input[0].pos + float4(0.5f, 0.5f, 0, 0);
-		//element.pos = mul(element.pos, g_WVP);
-		//element.color = input[0].color;
-		//element.uv = input[0].uv;
-		//output.Append(element);
-
+        //現在のストリップを終了
 		output.RestartStrip();
 	}
 }

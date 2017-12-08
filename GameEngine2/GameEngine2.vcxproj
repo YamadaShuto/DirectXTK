@@ -171,12 +171,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Emitter.h" />
+    <ClInclude Include="ExplosionEmitter.h" />
+    <ClInclude Include="FlameEmitter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="OriginalEmitter.h" />
+    <ClInclude Include="OriginalEmitter2.h" />
     <ClInclude Include="ParticleEffectManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="ExplosionEmitter.cpp" />
+    <ClCompile Include="FlameEmitter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="OriginalEmitter.cpp" />
+    <ClCompile Include="OriginalEmitter2.cpp" />
     <ClCompile Include="ParticleEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
